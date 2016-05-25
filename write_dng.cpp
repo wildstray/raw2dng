@@ -83,7 +83,7 @@ int get_tile(TCCDParam& ccd_pars, color_t const* ccd, int tile_i,
    if( y + tile_h >= (int)ccd_pars.raw_height )
       h = ccd_pars.raw_height - y;
 
-   unsigned or = 0;
+   unsigned _or = 0;
    int i, j;
    color_t* t = tile;
    color_t const* c = &ccd[ y*ccd_pars.raw_width + x ];
@@ -93,7 +93,7 @@ int get_tile(TCCDParam& ccd_pars, color_t const* ccd, int tile_i,
       {
          unsigned sample = c[j] << shift;
          t[j] = (color_t)sample;
-         or |= sample;
+         _or |= sample;
       }
       for(j; j<tile_w; ++j)
          t[j] = t[j-2];
@@ -109,7 +109,7 @@ int get_tile(TCCDParam& ccd_pars, color_t const* ccd, int tile_i,
 
    for(i=0; i<16; ++i)
    {
-      if( or & (1<<i) )
+      if( _or & (1<<i) )
          return i;
    }
    return 0;
@@ -136,7 +136,7 @@ bool THuffTab2::operator == ( THuffTab2 const & a ) const
 {
    if( !used ) return false;
    if( !a.used ) return false;
-
+   
    if( nCode != a.nCode ) return false;
    if( memcmp( bits, a.bits, 16 ) != 0 ) return false;
    if( memcmp( code, a.code, nCode ) != 0 ) return false;
@@ -158,7 +158,7 @@ void THuffTab2::init( unsigned char lens[], unsigned char value[], int nItems )
       temp_hufftab[i].value = value[i];
       hufftab[ value[i] ] = temp_hufftab[i];
    }
-
+   
    delete [] temp_hufftab;
 }
 
@@ -705,7 +705,7 @@ bool TIFF_Content::write_dng(FILE* out, bool endian, bool compatible, bool optim
       CFAPattern[2] = (byte)((ccd_pars.cfa_colors >> 8) & 0x0F);
       CFAPattern[3] = (byte)((ccd_pars.cfa_colors >> 4) & 0x0F);
    }
-
+   
    IFD.add_tag( TIFF::CFARepeatPatternDim, TIFF::type_WORD, 2, CFARepeatPatternDim );
    IFD.add_tag( TIFF::CFAPattern, TIFF::type_BYTE, 4, CFAPattern );
 

@@ -101,7 +101,7 @@ public:
 
    void free();
 
-   void swap( IFDir& a )
+   void swap( IFDir a )
    {
       ::swap(tag_count_, a.tag_count_);
       ::swap(array_, a.array_);

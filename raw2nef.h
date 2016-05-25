@@ -15,8 +15,10 @@
 #define CORE_VERSION " v0.16.6.2"
 #endif
 
-#ifndef _MSC_VER
-#define __try try
+#ifdef _MSC_VER
+#include <excpt.h>
+#define try __try
+#define catch(...) __except(1)
 #endif
 
 typedef unsigned char byte;

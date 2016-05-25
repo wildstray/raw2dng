@@ -57,7 +57,7 @@ class TPoints
 {
 public:
    TPoints(int n) : i_point(0), max_point(n), p(n) {}
-
+   
    int i_point, max_point;
    buff_t<TPoint> p;
 

@@ -178,7 +178,7 @@ bool nikon_unpack(FILE* in, THuffTab* tab, TFramePar& frame, int bias, color_t p
    int dy = frame.n_mcu_X*frame.mcu;
 
    color_t* line = picture;
-
+   
    for( int i_line = 0; i_line < 2; ++i_line, line += dy )
    {
       color_t* pix = line;
@@ -268,11 +268,11 @@ bool safe_read_compressed_nikon(FILE* in, unsigned w, unsigned h, int bias, colo
 
 bool read_compressed_nikon(FILE* in, unsigned w, unsigned h, int bias, color_t picture[])
 {
-   __try
+   try
    {
       return safe_read_compressed_nikon( in, w, h, bias, picture );
    }
-   __except(1)
+   catch(...)
    {
       printf("error: except\n");
    }

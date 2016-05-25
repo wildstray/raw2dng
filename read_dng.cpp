@@ -505,7 +505,7 @@ parse_marker:
             frame.mcuW = maxH;
             frame.mcuH = maxV;
          }
-         
+
          frame.n_mcu_X = (frame.X + frame.mcuW - 1)/frame.mcuW;
          frame.n_mcu_Y = (frame.Y + frame.mcuH - 1)/frame.mcuH;
       }
@@ -552,7 +552,7 @@ parse_marker:
 
             if( marker )
                goto parse_marker;
-
+               
             goto next_marker;
          }
          else
@@ -579,12 +579,12 @@ parse_marker:
 
 bool read_jpeg( FILE* in, color_t picture[], bool bug )
 {
-   __try
+   try
    {
       return safe_read_jpeg( in, picture, bug );
 
    }
-   __except(1)
+   catch(...)
    {
       printf("error: except\n");
    }

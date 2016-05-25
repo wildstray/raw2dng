@@ -197,7 +197,7 @@ bool TIFF_Content::write_nef(FILE* out, bool endian, bool compatible)
    // hide members to prevent changes
    IFDir IFD0(this->IFD1);
    IFDir EXIF(this->EXIF); 
-
+    
    unsigned ifd0_start = 8;
    unsigned ifd0_data_size = tn_W*tn_H*3; //57600;
    IFD0.add_DWORD( TIFF::NewSubfile, 1 ); // thumbnail
@@ -208,7 +208,7 @@ bool TIFF_Content::write_nef(FILE* out, bool endian, bool compatible)
    IFD0.add_tag( TIFF::BitsPerSample, TIFF::type_WORD, samples_per_pixel, bits_per_sample );
    IFD0.add_WORD( TIFF::Compression, 1 );
    IFD0.add_WORD( TIFF::PhotometricInterpretation, 2 ); // RGB
-
+   
    if( !IFD0.get_tag(TIFF::ImageDescription) )
       IFD0.add_ASCII( TIFF::ImageDescription, "          " );
 
@@ -450,7 +450,7 @@ bool TIFF_Content::write_nef(FILE* out, bool endian, bool compatible)
    for(int y=0; y<image_H; ++y)
    {
       int _y;
-
+      
       if( y < half )
          _y = (y+v_offset)*2;
       else

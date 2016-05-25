@@ -1,6 +1,12 @@
 #ifndef __FILE_H
 #define __FILE_H
 
+#ifndef MAX_PATH
+#include <limits.h>
+#define MAX_PATH PATH_MAX
+#define _MAX_PATH PATH_MAX
+#endif//MAX_PATH
+
 class TFile
 {
 public:

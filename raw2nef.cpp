@@ -139,7 +139,7 @@ bool TRaw2Nef::ParseIniFile(TCCDParam& ccd_pars, unsigned camera, unsigned file_
          eof_path = exe_bslash+1;
 
       ini_fn = "raw2nef.ini";
-      
+
       if( eof_path )
       {
          if( !ini_buf )
@@ -207,7 +207,7 @@ bool TRaw2Nef::ParseIniFile(TCCDParam& ccd_pars, unsigned camera, unsigned file_
                if( camera == 0 && file_size != pars.file_size )
                   goto next_line;
                break;
-
+               
             case e_data_offset: pars.data_offset = atoi( field ); break;
             case e_raw_width: pars.raw_width = atoi( field ); break;
             case e_raw_height: pars.raw_height = atoi( field ); break;
@@ -407,7 +407,7 @@ bool TRaw2Nef::ProcessFile( unsigned camera )
             }
          }
       }
-      
+
       unsigned picture_size = ccd_pars.raw_height*ccd_pars.raw_width;
       TiffContent.picture.alloc(picture_size);
       color_t* ccd = TiffContent.picture;

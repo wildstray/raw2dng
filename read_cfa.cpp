@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <excpt.h>
 #pragma hdrstop
 
 /*
@@ -35,7 +34,7 @@ int read_cfa( FILE* in, IFDir* IFD, TIFF_Content& NEF )
    IFDir::Tag* CFAPattern = IFD->get_tag(TIFF::CFAPattern);
    if( !CFAPattern ) return e_error_format;
    if( CFAPattern->count != 4 ) return e_error_format;
-   
+
    unsigned cfa = (CFAPattern->get_value(0) << 16)
       | (CFAPattern->get_value(1) << 12)
       | (CFAPattern->get_value(2) << 8)
@@ -43,7 +42,7 @@ int read_cfa( FILE* in, IFDir* IFD, TIFF_Content& NEF )
 
    TCCDParam& ccd_pars = NEF.ccd_pars;
    memset( &ccd_pars, 0, sizeof(TCCDParam) );
-   
+
    switch(cfa)
    {
    case 0x14530: ccd_pars.cfa_colors = TCCDParam::GMYC; break;
@@ -478,11 +477,11 @@ int TIFF_Content::safe_read_raw(FILE* in, IFDir* CFA)
 
 int TIFF_Content::read_raw(FILE* in, IFDir* CFA)
 {
-   __try
+   try
    {
       return safe_read_raw( in, CFA );
    }
-   __except(1)
+   catch(...)
    {
       printf("error: except\n");
    }

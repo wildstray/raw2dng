@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <excpt.h>
 #pragma hdrstop
 
 /*
@@ -644,11 +643,11 @@ void TiffReader::safe_parse_tags(TParser parser, IFDir* IFD, TIFF_Content& NEF)
 
 void TiffReader::parse_tags(TParser parser, IFDir* IFD, TIFF_Content& NEF)
 {
-   __try
+   try
    {
       safe_parse_tags(parser, IFD, NEF);
    }
-   __except(1)
+   catch(...)
    {
       printf("error: except\n");
    }
@@ -751,11 +750,11 @@ IFDir* TIFF_Content::Get_CFA()
 
 bool TIFF_Content::read_tiff( FILE* in )
 {
-   __try
+   try
    {
       return safe_read_tiff( in );
    }
-   __except(1)
+   catch(...)
    {
       printf("error: except\n");
    }
@@ -766,7 +765,7 @@ bool TIFF_Content::RestoreOriginalModel()
 {
    IFDir::Tag* Make = IFD1.get_tag(TIFF::Make);
    if( !Make ) return false;
-   
+
    if( Make->count >= 5
     && 0 == memcmp( Make->value, "NIKON", 5 ) )
    {
@@ -810,13 +809,13 @@ bool TIFF_Content::safe_read_tiff( FILE* in )
       if( tiff.tiff_format == tiff.panasonic_raw )
       {
          tiff.parse_tags( ParsePanasonicTag, &IFD1, *this );
-         
+
          IFDir::Tag* ISOSpeedRating = IFD1.get_tag( 0x017 );
          if( ISOSpeedRating )
          {
             if( !EXIF.get_tag( 0x8827 ) )
                EXIF.add_WORD( 0x8827, (word)ISOSpeedRating->get_value() );
-               
+
             IFD1.remove( 0x017 );
          }
       }
@@ -824,11 +823,11 @@ bool TIFF_Content::safe_read_tiff( FILE* in )
       if( tiff.tiff_format == tiff.minolta_mrw )
       {
          tiff.parse_tags( ParseTag, &IFD1, *this );
-         
+
          fseek( in, 0, SEEK_END );
          unsigned file_size = ftell( in );
          rewind( in );
-
+         
          IFD1.add_WORD( TIFF::BitsPerSample, (word)12 );
          IFD1.add_DWORD( TIFF::StripOffsets, (dword)tiff.mrw_data_offset );         
          IFD1.add_DWORD( TIFF::StripByteCounts, (dword)(file_size-tiff.mrw_data_offset) );
@@ -864,11 +863,11 @@ bool TIFF_Content::safe_read_tiff( FILE* in )
 
 bool TIFF_Content::read_exif( FILE* in )
 {
-   __try
+   try
    {
       return safe_read_exif( in );
    }
-   __except(1)
+   catch(...)
    {
       printf("error: except\n");
    }

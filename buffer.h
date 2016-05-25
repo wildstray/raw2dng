@@ -33,7 +33,7 @@ public:
    T* buff_;
    unsigned size_;
 
-   void swap(buff_t& a)
+   void swap(buff_t a)
    {
       ::swap(buff_, a.buff_);
       ::swap(size_, a.size_);

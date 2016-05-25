@@ -96,7 +96,7 @@ unsigned IFDir::Tag::get_value(int i) const
    case TIFF::type_DWORD:
    case TIFF::type_LONG:
       return ((unsigned long*)value)[i];
-      
+
    default:;
    }
    return 0;
